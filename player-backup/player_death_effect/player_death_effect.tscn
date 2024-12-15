@@ -1,0 +1,110 @@
+[gd_scene load_steps=14 format=3 uid="uid://dp1kj65nf0108"]
+
+[ext_resource type="Script" path="res://player/player_death_effect/player_death_effect.gd" id="1_h7foj"]
+[ext_resource type="Texture2D" uid="uid://cj1i0m5tx3egj" path="res://player/player_death_effect/dot8x8.png" id="2_1yt4a"]
+[ext_resource type="Texture2D" uid="uid://ck8i3mdbh44lf" path="res://player/player_death_effect/spritesheet.png" id="3_ik52g"]
+
+[sub_resource type="Gradient" id="Gradient_3dtat"]
+colors = PackedColorArray(1, 0.512532, 0.981289, 1, 0.429807, 0.0278506, 0.466749, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpppe"]
+atlas = ExtResource("3_ik52g")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkcxl"]
+atlas = ExtResource("3_ik52g")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpaf0"]
+atlas = ExtResource("3_ik52g")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dejbb"]
+atlas = ExtResource("3_ik52g")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33i11"]
+atlas = ExtResource("3_ik52g")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rglv"]
+atlas = ExtResource("3_ik52g")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jlil"]
+atlas = ExtResource("3_ik52g")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p30y0"]
+atlas = ExtResource("3_ik52g")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hehr3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dpppe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkcxl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpaf0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dejbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33i11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rglv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jlil")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p30y0")
+}],
+"loop": false,
+"name": &"death_effect",
+"speed": 12.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PlayerDeathEffect" type="Node2D"]
+script = ExtResource("1_h7foj")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0, -16)
+amount = 100
+speed_scale = 1.5
+explosiveness = 0.5
+texture = ExtResource("2_1yt4a")
+emission_shape = 1
+emission_sphere_radius = 35.0
+direction = Vector2(0, -0.5)
+gravity = Vector2(0, 0)
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+color_ramp = SubResource("Gradient_3dtat")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hehr3")
+animation = &"death_effect"
+autoplay = "death_effect"
+frame = 7
+frame_progress = 1.0
+offset = Vector2(0, -15)
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

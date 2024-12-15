@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://xvvdcralyler"]
+
+[ext_resource type="Script" path="res://ui/game_screen.gd" id="1_fimuq"]
+[ext_resource type="Theme" uid="uid://due6e4gn1ixtw" path="res://ui/theme/game_theme.tres" id="2_wd6im"]
+[ext_resource type="Script" path="res://ui/health_bar/health_bar2.gd" id="3_cbxw3"]
+[ext_resource type="Texture2D" uid="uid://sc254of64xpi" path="res://ui/icons8-pause-12.png" id="4_hofbg"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_xrqkw"]
+
+[node name="GameScreen" type="CanvasLayer"]
+script = ExtResource("1_fimuq")
+
+[node name="BackgroundMarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 32)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BackgroundTextureRect" type="TextureRect" parent="BackgroundMarginContainer"]
+modulate = Color(0, 0, 0, 0.729412)
+z_index = -2
+layout_mode = 2
+texture = SubResource("CanvasTexture_xrqkw")
+
+[node name="ItemMarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ItemMarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ItemMarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="EnergyLabel" type="Label" parent="ItemMarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("2_wd6im")
+theme_override_font_sizes/font_size = 10
+text = "Energy"
+
+[node name="EnergyLabelDigits" type="Label" parent="ItemMarginContainer/VBoxContainer/HBoxContainer2/EnergyLabel"]
+layout_mode = 0
+offset_left = 66.0
+offset_right = 106.0
+offset_bottom = 16.0
+theme_override_font_sizes/font_size = 10
+text = "99"
+script = ExtResource("3_cbxw3")
+
+[node name="PauseTextureButton" type="TextureButton" parent="ItemMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+texture_normal = ExtResource("4_hofbg")
+
+[connection signal="pressed" from="ItemMarginContainer/PauseTextureButton" to="." method="_on_pause_texture_button_pressed"]
